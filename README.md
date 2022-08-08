@@ -85,5 +85,7 @@ dotnet --list-sdks
  - Abordagem Code/Model First consiste em trabalhar primeiro no código e gerar um banco de dados com código (migrations). É um modelo amplamente usado pois aí a regra de negócio fica no código, o banco vai servir pra somente persistir dados.
  - EF é baseado em contextos, necessita apenas de um DataContext pra funcionar. Esse DataContext define um banco de dados em memória, tendo a aplicação uma velocidade muito maior em relação a um disco de banco. DbSet são subconjuntos de dados, representando as tabelas. A ideia é pegar no banco, carregar e trabalhar em memoria, desce pro banco, sem sobrecarregar a memoria.
  - Models contém as representações dos objetos do banco de dados.
- - 
+ - A partir do momento que você aplica um .ToList() no contexto, a lista virá do BANCO e não da memoria da aplicação.
+ - Cuidado ao aplicar condicional junto com o ToList, sempre deixar este comando no final, caso contrario toda as informações serão baixadas e depois são filtradas, o que acaba ferrando em ambos os lados.
+ - Use .AsNoTracking() APENAS para leituras, pois o tracking só é necessário caso haja uma alteração nos dados.
 
