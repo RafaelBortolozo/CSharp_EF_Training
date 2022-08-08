@@ -40,18 +40,39 @@ namespace Blog
             // context.Posts.Add(post);
             // context.SaveChanges();
 
-            var posts = context
-                .Posts
-                .AsNoTracking()
-                .Include(x => x.Author) //innerjoin
-                .Include(x => x.Category) //innerjoin
-                .ThenInclude(x => x.) //innerjoin do innerjoin, pode-se obter valores de tabelas filhos
-                .OrderByDescending(x => x.LastUpdateDate)
-                .ToList();
 
-            foreach(var post in posts){
-                Console.WriteLine($"{post.Title} escrito por {post.Author?.Name}");
-            }
+            /***************************************************************************/
+            //IMPRIMINDO
+
+            // var posts = context
+            //     .Posts
+            //     .AsNoTracking()
+            //     .Include(x => x.Author) //innerjoin
+            //     .Include(x => x.Category) //innerjoin
+            //     //.ThenInclude(x => x.) //subselect
+            //     .OrderByDescending(x => x.LastUpdateDate)
+            //     .ToList();
+
+            // foreach(var post in posts){
+            //     Console.WriteLine($"{post.Title} escrito por {post.Author?.Name}");
+            // }
+
+            /***************************************************************************/
+            // ATUALIZANDO 
+            // Mesmo o nome do autor não estando na tabela "posts", foi feito 
+            // o innerjoin com aquela tabela de usuarios e portanto permitindo 
+            // com que o nome do autor fosse alterado pela query do post
+
+            var post = context
+                .Posts
+                .Include(x => x.Author) 
+                .Include(x => x.Category) 
+                .OrderByDescending(x => x.LastUpdateDate)
+                .FirstOrDefault();
+
+            post.Author.Name = "Teste";
+            context.Posts.Update(post);
+            context.SaveChanges();
         }
     }
 }
