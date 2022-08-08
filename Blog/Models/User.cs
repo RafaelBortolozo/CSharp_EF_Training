@@ -1,16 +1,11 @@
-namespace Blog.Models {
-    /* 
-        Model baseado no seguinte código...
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-        [Id] INT NOT NULL IDENTITY(1, 1),
-        [Name] NVARCHAR(80) NOT NULL,
-        [Email] VARCHAR(200) NOT NULL,
-        [PasswordHash] VARCHAR(255) NOT NULL,
-        [Bio] TEXT NOT NULL,
-        [Image] VARCHAR(2000) NOT NULL,
-        [Slug] VARCHAR(80) NOT NULL,
-    */
+namespace Blog.Models {
+    [Table("User")]
     public class User {
+        [Key] //id da classe tem relação com o id do banco
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] //chave será gerada pelo banco
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

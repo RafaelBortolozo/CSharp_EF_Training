@@ -10,51 +10,35 @@ namespace Blog
     {
         static void Main(string[] args)
         {
-            using(var context = new BlogDataContext()){
-                // ADICIONAR
+            using var context = new BlogDataContext();
 
-                // var tag1 = new Tag {Name="ASP.NET", Slug="aspnet"};
-                // context.Tags.Add(tag1);
-                // context.SaveChanges();
+            var user = new User{
+                Name = "Rafael Bortolozo",
+                Slug = "rafaelbortolozo",
+                Email = "rafaelbortolozo@outlook.com",
+                Bio = "joão ninguem",
+                Image = "https://bortobe.com",
+                PasswordHash = "senhaforte123"
+            };
 
-                // var tag2 = new Tag {Name=".NET", Slug="dotnet"};
-                // context.Tags.Add(tag2);
-                // context.SaveChanges();
-                
-                /*********************************************************/
-                // ATUALIZAR
+            var category = new Category{
+                Name = "Backend",
+                Slug = "backend",
+            };
 
-                // var tag = context.Tags.FirstOrDefault(x => x.Id == 1);
-                // tag.Name = ".NET";
-                // tag.Slug = "dotnet";
+            var post = new Post{
+                Author = user,
+                Category = category,
+                Body = "<p>Hello world</p>",
+                Slug = "Comecando-com-ef-core",
+                Summary = "Neste artigo vamos aprender EF Core",
+                Title = "Começando com Ef Core",
+                CreateDate = DateTime.Now,
+                LastUpdateDate = DateTime.Now
+            };
 
-                // context.Update(tag);
-                // context.SaveChanges();
-
-                /*********************************************************/
-                // REMOVER
-                // var tag = context.Tags.FirstOrDefault(x => x.Id == 1);
-
-                // context.Remove(tag);
-                // context.SaveChanges();
-
-                /*********************************************************/
-                // var tags = context
-                //     .Tags
-                //     .Where(x => x.Name.Contains(".NET"))
-                //     .ToList();
-
-                // foreach(var tag in tags){
-                //     Console.WriteLine(tag.Name);
-                // }
-
-                var tag = context
-                    .Tags
-                    .AsNoTracking()
-                    .FirstOrDefault(x => x.Id == 3);
-
-                Console.WriteLine(tag?.Name);
-            }
+            context.Posts.Add(post);
+            context.SaveChanges();
         }
     }
 }
